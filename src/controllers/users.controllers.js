@@ -6,7 +6,6 @@ export const getUsers = async (req, res) =>{
 
     try {
         const [rows] = await pool.query('select * from usuarios')
-        res.header("Access-Control-Allow-Origin", "*")
         res.json(rows)
     }
     catch (error) {
