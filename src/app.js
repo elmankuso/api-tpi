@@ -1,5 +1,7 @@
 // importar nodulo de express
 import express from 'express'
+//importar modulo de cors
+import cors from 'cors'
 
 //importar las rutas
 import usersRoutes from "./routes/users.routes.js"
@@ -12,6 +14,8 @@ const app = express()
 //antes de llegar a la ruta
 app.use(express.json())
 
+// usar middleware cors para permitir a todas las direcciones acceder
+app.use(cors())
 
 //usar las rutas existentes
 app.use(indexRoutes)
