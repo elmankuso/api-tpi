@@ -5,7 +5,7 @@ import {Router} from 'express'
 import {pool} from "../db.js"
 
 //importar las funciones de los controlladores para acceder a la base de datos
-import {getUsers, getUser, createUser, updateUser, deleteUser, getUserByMail} from '../controllers/users.controllers.js'
+import {getUsers, getUser, createUser, updateUser, deleteUser, getUserByMail, getUserCards, createUserCard} from '../controllers/users.controllers.js'
 
 const router = Router()
 
@@ -21,6 +21,10 @@ router.post("/users", createUser)
 router.patch("/users/:id", updateUser)
 
 router.delete("/users/:id", deleteUser)
+
+router.get("/cards/:id", getUserCards)
+
+router.post("/cards", createUserCard)
 
 //exportar el router para importarlo en index -> UserRoutes
 export default router

@@ -110,3 +110,41 @@ export const deleteUser = async (req, res) =>{
         res.status(500).json({message:'ocurrio un error'})
     } 
 }
+
+export const getUserCards = async (req, res) =>{
+    try {
+        //extrae el parametro enviado en la url
+        const [rows] = await pool.query('select * from cartas where ownerID = ?', [req.params.id])
+        console.log(rows)
+
+        //chequear que devuelva algo o no
+        if(rows.length <= 0){
+            return res.status(404).json({message: 'cartas no encontradas'})
+        }
+
+        res.json(rows[0])
+    } catch (error){
+        return res.status(500).json({message: 'ocurrio un error'})
+    }
+}
+
+export const createUserCard = async (req, res) =>{
+    
+    const {ownerID, pokemonID, fechaObtenida} = req.body
+
+    try {
+
+
+        const [rows] = await pool.query('insert into cartas(ownerID, PokemonID) values (?,?)', [ownerID, pokemonID])
+
+        res.send({
+            id: rows.insertId,
+            ownerID,
+            pokemonID,
+            fechaObtenida
+        })
+    } catch (error) {
+        res.status(500).json({message: 'ocurrio un error'})
+    }
+
+}
