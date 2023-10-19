@@ -122,7 +122,7 @@ export const getCards = async (req, res) =>{
             return res.status(404).json({message: 'cartas no encontradas'})
         }
 
-        res.json(rows[0])
+        res.json(rows)
     } catch (error){
         return res.status(500).json({message: 'ocurrio un error'})
     }
