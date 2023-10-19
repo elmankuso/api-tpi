@@ -165,3 +165,42 @@ export const createUserCard = async (req, res) =>{
     }
 
 }
+
+export const updateCard = async(req, res) =>{
+
+    const {id} = req.params
+    const {ownerID, origen, fechaObtenida} = req.body
+
+    try{
+
+        const [result] = await pool.query(
+            'update usuarios set ownerID = ifnull(?, ownerID), origen = ifnull(?, origen), fechaObtenida = ifnull(?, fechaObtenida) where cartaId= ?',
+            [ownerID, origen, fechaObtenida, id]
+            )
+
+        if(result.affectedRows<=0){
+            return res.status(404).json({message : 'carta no encontrado'})
+        }
+
+        const [rows] = await pool.query('select * from cartas where userid = ?', [id])
+
+
+        res.json(rows[0])
+    } catch (error){
+        res.status(500).json({message:'ocurrio un error'})
+    }
+    
+}
+
+export const deleteCard = async (req, res) =>{
+    try{
+        const [result] = await pool.query('delete from cartas where cartaId = ?', [req.params.id])
+        if(result.affectedRows <= 0){
+            return res.status(404).json({message: 'carta no encontrado'})
+        }
+
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({message:'ocurrio un error'})
+    } 
+}
