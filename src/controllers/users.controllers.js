@@ -174,7 +174,7 @@ export const updateCard = async(req, res) =>{
     try{
 
         const [result] = await pool.query(
-            'update usuarios set ownerID = ifnull(?, ownerID), origen = ifnull(?, origen), fechaObtenida = ifnull(?, fechaObtenida) where cartaId= ?',
+            'update cartas set ownerID = ifnull(?, ownerID), origen = ifnull(?, origen), fechaObtenida = ifnull(?, fechaObtenida) where cartaId= ?',
             [ownerID, origen, fechaObtenida, id]
             )
 
@@ -182,7 +182,7 @@ export const updateCard = async(req, res) =>{
             return res.status(404).json({message : 'carta no encontrado'})
         }
 
-        const [rows] = await pool.query('select * from cartas where userid = ?', [id])
+        const [rows] = await pool.query('select * from cartas where cartaid = ?', [id])
 
 
         res.json(rows[0])
