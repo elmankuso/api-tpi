@@ -204,3 +204,72 @@ export const deleteCard = async (req, res) =>{
         res.status(500).json({message:'ocurrio un error'})
     } 
 }
+
+export const getUserFollowed = async (req, res) =>{
+    try {
+        //extrae el parametro enviado en la url
+        const [rows] = await pool.query('select * from seguidores where seguidorID = ?', [req.params.id])
+        console.log(rows)
+
+        //chequear que devuelva algo o no
+        if(rows.length <= 0){
+            return res.status(404).json({message: 'seguidores no encontrados'})
+        }
+
+        res.json(rows)
+    } catch (error){
+        return res.status(500).json({message: 'ocurrio un error'})
+    }
+}
+
+export const getUserFollowers = async (req, res) =>{
+    try {
+        //extrae el parametro enviado en la url
+        const [rows] = await pool.query('select * from seguidores where seguidoID = ?', [req.params.id])
+        console.log(rows)
+
+        //chequear que devuelva algo o no
+        if(rows.length <= 0){
+            return res.status(404).json({message: 'seguidores no encontrados'})
+        }
+
+        res.json(rows)
+    } catch (error){
+        return res.status(500).json({message: 'ocurrio un error'})
+    }
+}
+
+export const createFollow = async (req, res) =>{
+    
+    const {seguidorID, seguidoID, fechaSeguimiento} = req.body
+
+    try {
+
+
+        const [rows] = await pool.query('insert into seguimientos(seguidorID, seguidoID) values (?,?)', [seguidorID, seguidoID])
+
+        res.send({
+            ownerID,
+            pokemonID,
+            fechaObtenida
+        })
+    } catch (error) {
+        res.status(500).json({message: 'ocurrio un error'})
+    }
+
+}
+
+export const deleteFollow = async (req, res) =>{
+    const {seguidorID, seguidoID, fechaSeguimiento} = req.body
+    try{
+        const [result] = await pool.query('delete from seguidores where seguidorID = ? and seguidoID = ?', [seguidorID,seguidoID])
+        if(result.affectedRows <= 0){
+            return res.status(404).json({message: 'seguimiento no encontrado'})
+        }
+
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({message:'ocurrio un error'})
+    } 
+}
+
