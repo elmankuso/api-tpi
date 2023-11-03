@@ -249,9 +249,8 @@ export const createFollow = async (req, res) =>{
         const [rows] = await pool.query('insert into seguidores(seguidorID, seguidoID) values (?,?)', [seguidorID, seguidoID])
 
         res.send({
-            ownerID,
-            pokemonID,
-            fechaObtenida
+            seguidorID,
+            seguidoID
         })
     } catch (error) {
         res.status(500).json({message: 'ocurrio un error'})
