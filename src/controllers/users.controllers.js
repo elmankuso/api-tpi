@@ -246,7 +246,7 @@ export const createFollow = async (req, res) =>{
     try {
 
 
-        const [rows] = await pool.query('insert into seguimientos(seguidorID, seguidoID) values (?,?)', [seguidorID, seguidoID])
+        const [rows] = await pool.query('insert into seguidores(seguidorID, seguidoID) values (?,?)', [seguidorID, seguidoID])
 
         res.send({
             ownerID,
