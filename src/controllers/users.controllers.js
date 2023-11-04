@@ -75,13 +75,13 @@ export const createUser = async (req, res) =>{
 export const updateUser = async(req, res) =>{
 
     const {id} = req.params
-    const {nombre, apellido, email, contrasenia, creditos} = req.body
+    const {nombre, apellido, email, contrasenia, creditos, pokebolas} = req.body
 
     try{
 
         const [result] = await pool.query(
-            'update usuarios set nombre = ifnull(?, nombre), apellido = ifnull(?, apellido), email = ifnull(?, email), contrasenia = ifnull(?, contrasenia), creditos = ifnull(?, creditos) where UserId= ?',
-            [nombre,apellido,email,contrasenia,creditos,id]
+            'update usuarios set nombre = ifnull(?, nombre), apellido = ifnull(?, apellido), email = ifnull(?, email), contrasenia = ifnull(?, contrasenia), creditos = ifnull(?, creditos), pokebolas = ifnull(?, pokebolas) where UserId= ?',
+            [nombre,apellido,email,contrasenia,creditos,pokebolas,id]
             )
 
         if(result.affectedRows<=0){
